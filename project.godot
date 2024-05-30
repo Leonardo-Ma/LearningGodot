@@ -18,13 +18,22 @@ config/icon="res://icon.svg"
 [autoload]
 
 Music="*res://scenes/music.tscn"
+Globals="*res://autoload/Globals.gd"
+
+[debug]
+
+gdscript/size/always_on_top=true
+gdscript/size/mode=0
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/size/mode=3
-window/size/borderless=true
+window/size/always_on_top=true
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gkanban/plugin.cfg")
 
 [input]
 
