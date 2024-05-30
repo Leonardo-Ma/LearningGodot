@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3q50inb6nxwv"]
+
+[ext_resource type="Theme" uid="uid://beel7n2lsj15g" path="res://main_theme.tres" id="1_teger"]
+[ext_resource type="Texture2D" uid="uid://copdgp3n4f1jm" path="res://assets/sprites/UIcoin.png" id="2_w7qbd"]
+[ext_resource type="Script" path="res://scenes/CoinAmountLabel.gd" id="3_hwron"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ywff3"]
+bg_color = Color(0.281187, 0.281187, 0.281187, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="UI" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_teger")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ywff3")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 2
+
+[node name="CoinIcon" type="TextureRect" parent="CanvasLayer/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_w7qbd")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="CoinAmountLabel" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 32
+text = "X / X"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_hwron")

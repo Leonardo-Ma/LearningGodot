@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://dlepvjo5787wd"]
+[gd_scene load_steps=16 format=3 uid="uid://dlepvjo5787wd"]
 
 [ext_resource type="Texture2D" uid="uid://bg7tj1l01a0gp" path="res://assets/sprites/world_tileset.png" id="1_3xj2g"]
 [ext_resource type="PackedScene" uid="uid://ceemcqy0u06fb" path="res://scenes/player.tscn" id="1_vljgr"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_y02ih"]
+[ext_resource type="PackedScene" uid="uid://d3q50inb6nxwv" path="res://scenes/game_overlay_ui.tscn" id="2_nqvo4"]
 [ext_resource type="PackedScene" uid="uid://b63ouexj5xlhb" path="res://scenes/platform.tscn" id="3_imwhg"]
 [ext_resource type="PackedScene" uid="uid://ysj08s06adfx" path="res://scenes/coin.tscn" id="4_5omf4"]
 [ext_resource type="PackedScene" uid="uid://ckaho7ebsqqw2" path="res://scenes/killzone.tscn" id="5_jv0hi"]
@@ -448,6 +449,9 @@ _data = {
 
 [node name="Game" type="Node2D"]
 
+[node name="OverlayUI" parent="." instance=ExtResource("2_nqvo4")]
+visible = false
+
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_y02ih")
@@ -471,33 +475,33 @@ position_smoothing_enabled = true
 
 [node name="Coins" type="Node" parent="."]
 
-[node name="coin" parent="Coins" instance=ExtResource("4_5omf4")]
+[node name="Coin" parent="Coins" instance=ExtResource("4_5omf4")]
 position = Vector2(162, 20)
 
-[node name="coin5" parent="Coins" instance=ExtResource("4_5omf4")]
+[node name="Coin5" parent="Coins" instance=ExtResource("4_5omf4")]
 position = Vector2(743, 89)
 
-[node name="coin6" parent="Coins" instance=ExtResource("4_5omf4")]
+[node name="Coin6" parent="Coins" instance=ExtResource("4_5omf4")]
 position = Vector2(632, 12)
 
-[node name="coin7" parent="Coins" instance=ExtResource("4_5omf4")]
+[node name="Coin7" parent="Coins" instance=ExtResource("4_5omf4")]
 position = Vector2(878, -56)
 
-[node name="coin2" parent="Coins" instance=ExtResource("4_5omf4")]
+[node name="Coin2" parent="Coins" instance=ExtResource("4_5omf4")]
 position = Vector2(410, 23)
 
-[node name="coin3" parent="Coins" instance=ExtResource("4_5omf4")]
+[node name="Coin3" parent="Coins" instance=ExtResource("4_5omf4")]
 position = Vector2(511, 23)
 
-[node name="coin4" parent="Coins" instance=ExtResource("4_5omf4")]
+[node name="Coin4" parent="Coins" instance=ExtResource("4_5omf4")]
 position = Vector2(265, -17)
 
 [node name="Platforms" type="Node" parent="."]
 
-[node name="platform" parent="Platforms" instance=ExtResource("3_imwhg")]
+[node name="Platform" parent="Platforms" instance=ExtResource("3_imwhg")]
 position = Vector2(334, 72)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Platforms/platform"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Platforms/Platform"]
 libraries = {
 "": SubResource("AnimationLibrary_t3myd")
 }
@@ -514,7 +518,19 @@ position = Vector2(823, 133)
 
 [node name="Labels" type="Node" parent="."]
 
-[node name="Space to jump" type="Label" parent="Labels"]
+[node name="wasdToMove" type="Label" parent="Labels"]
+offset_left = -89.0
+offset_top = 1.0
+offset_right = 58.0
+offset_bottom = 31.0
+theme_override_colors/font_color = Color(0.121569, 0, 0.266667, 1)
+theme_override_fonts/font = ExtResource("8_e66d5")
+theme_override_font_sizes/font_size = 8
+text = "WASD or Arrows to move"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpaceToJump2" type="Label" parent="Labels"]
 offset_left = 202.0
 offset_top = 3.0
 offset_right = 327.0
@@ -524,7 +540,7 @@ theme_override_fonts/font = ExtResource("8_e66d5")
 theme_override_font_sizes/font_size = 8
 text = "Press space to jump"
 
-[node name="Carefull down there" type="Label" parent="Labels"]
+[node name="CarefullDownThere" type="Label" parent="Labels"]
 offset_left = 734.0
 offset_top = -75.0
 offset_right = 859.0
@@ -533,3 +549,6 @@ theme_override_colors/font_color = Color(0.121569, 0, 0.266667, 1)
 theme_override_fonts/font = ExtResource("8_e66d5")
 theme_override_font_sizes/font_size = 8
 text = "Carefull down there"
+
+[node name="platform" parent="." instance=ExtResource("3_imwhg")]
+position = Vector2(42, 6)

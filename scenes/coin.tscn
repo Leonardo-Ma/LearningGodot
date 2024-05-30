@@ -206,6 +206,7 @@ sprite_frames = SubResource("SpriteFrames_wy7wm")
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_67ydy")
 
 [node name="PickUpSound" type="AudioStreamPlayer2D" parent="."]
