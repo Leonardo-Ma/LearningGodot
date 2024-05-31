@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-
-const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -9,6 +7,12 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var animated_sprite = $AnimatedSprite2D
 
+#==============================================================
+# Need to confirm if this is correct practice to use global variables
+#@export_enum(Globals.playerClass) var playerClass = Globals.playerClass
+@export_range(0, 100) var playerHealth = Globals.playerHealth
+@export var SPEED = Globals.playerSpeed
+#===============================================================
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -45,3 +49,20 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+	
+func player():
+	pass
+
+func _on_slime_2_damage(damageAmount):
+	print("Damagedonslime2damage")
+	take_damage(damageAmount)
+
+func take_damage(damageAmount):
+	Globals.playerHealth -= damageAmount
+	print(Globals.playerHealth)
+	#TODO Play damaged animation
+	#TODO Emit signal to update UI health
+
+func _on_slime_damage(damageValue):
+	print("Damagedonslimedamage")
+	take_damage(damageValue)
