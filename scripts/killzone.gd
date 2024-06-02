@@ -2,13 +2,6 @@ extends Area2D
 
 @onready var timer = $Timer
 
-
-func _on_body_entered(body):
-	Engine.time_scale = 0.5
-	timer.start()
-
-
-func _on_timer_timeout():
-	get_tree().reload_current_scene()
-	Engine.time_scale = 1
-	Globals.coinsCollected = 0
+func _on_body_entered(_body):
+	var player = get_tree().get_root().get_node("Game/Player")
+	player.die()
