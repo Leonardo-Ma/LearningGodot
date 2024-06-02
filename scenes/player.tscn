@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://ceemcqy0u06fb"]
+[gd_scene load_steps=26 format=3 uid="uid://c52cxn3tux2ge"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_1xjd0"]
 [ext_resource type="Texture2D" uid="uid://qdln4kxilgve" path="res://assets/sprites/knight.png" id="1_o4k4g"]
@@ -186,3 +186,5 @@ frame_progress = 0.193057
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_mm3o3")
+
+[connection signal="update_playerhealth" from="." to="." method="_on_update_playerhealth"]
