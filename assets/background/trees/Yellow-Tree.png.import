@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qdln4kxilgve"
-path="res://.godot/imported/knight.png-7c67c83d34932624952797d9e971a644.ctex"
+uid="uid://y8eb2845t00h"
+path="res://.godot/imported/Yellow-Tree.png-e98d492e2036715467942ebb99c0521a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/knight.png"
-dest_files=["res://.godot/imported/knight.png-7c67c83d34932624952797d9e971a644.ctex"]
+source_file="res://assets/background/trees/Yellow-Tree.png"
+dest_files=["res://.godot/imported/Yellow-Tree.png-e98d492e2036715467942ebb99c0521a.ctex"]
 
 [params]
 
