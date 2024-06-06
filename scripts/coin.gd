@@ -5,4 +5,3 @@ extends Area2D
 func _on_body_entered(_body):
 	Globals.add_coin()
 	animation_player.play("pickup_animation")
-	Globals.coinsCollected += 1

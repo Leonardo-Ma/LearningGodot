@@ -2,11 +2,10 @@ extends Node
 
 enum playerClass {NoClass, Wizard, Knight}
 
-var coinsCollected = 0
-var playerHealth = 100
-var playerDamage = 10
-var playerSpeed = 130.0
-var coins = 0
+var playerHealth: int = 100
+var playerDamage: int = 10
+var playerSpeed: float = 130.0
+var coins: int = 0
 
 func _ready():
 	randomize()
@@ -14,3 +13,7 @@ func _ready():
 	
 func add_coin():
 	coins += 1
+	
+func resetValues():
+	Globals.playerHealth = 100
+	Globals.coins = 0
