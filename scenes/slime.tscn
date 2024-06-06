@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dvkjjn5lmpghn"]
+[gd_scene load_steps=12 format=3 uid="uid://dvkjjn5lmpghn"]
 
-[ext_resource type="Texture2D" uid="uid://cw3ocsdo5xb38" path="res://assets/sprites/slime_green.png" id="1_buwiv"]
+[ext_resource type="Texture2D" uid="uid://cw3ocsdo5xb38" path="res://assets/sprites/enemy/slime_green.png" id="1_buwiv"]
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_hyhiy"]
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="3_5xfbt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eo7d1"]
 atlas = ExtResource("1_buwiv")
@@ -39,10 +40,17 @@ animations = [{
 "speed": 6.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fkpb"]
-size = Vector2(22, 17)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0caug"]
+radius = 9.0
+height = 18.0
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fkpb"]
+size = Vector2(14.5, 12.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4dxh"]
+size = Vector2(17, 14.5)
+
+[node name="Slime" type="CharacterBody2D"]
 script = ExtResource("1_hyhiy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -50,16 +58,23 @@ sprite_frames = SubResource("SpriteFrames_0wl3n")
 autoplay = "default"
 frame_progress = 0.367124
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="AnimatedSprite2D"]
+script = ExtResource("3_5xfbt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Hurtbox"]
 position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_0caug")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-0.25, 6.25)
 shape = SubResource("RectangleShape2D_8fkpb")
 
 [node name="DamageDetection" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageDetection"]
-position = Vector2(0, 3.5)
-shape = SubResource("RectangleShape2D_8fkpb")
+position = Vector2(-0.5, 6.25)
+shape = SubResource("RectangleShape2D_j4dxh")
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, 8)
