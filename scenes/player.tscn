@@ -363,7 +363,7 @@ input_1/reset = true
 animation = &"run"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_8odqd"]
-graph_offset = Vector2(-700.435, 63.7308)
+graph_offset = Vector2(-700.215, 44.4393)
 nodes/falling/node = SubResource("AnimationNodeAnimation_31flf")
 nodes/falling/position = Vector2(-360, 360)
 nodes/idle/node = SubResource("AnimationNodeAnimation_wwjn2")

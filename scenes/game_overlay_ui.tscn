@@ -34,12 +34,9 @@ shadow_offset = Vector2(0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gey0t"]
 bg_color = Color(1, 1, 1, 1)
 
-[node name="GameOverlayUI" type="Node2D"]
-position = Vector2(1, 85)
+[node name="GameOverlayUI" type="CanvasLayer"]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="CoinContainer" type="PanelContainer" parent="CanvasLayer"]
+[node name="CoinContainer" type="PanelContainer" parent="."]
 offset_left = 1.0
 offset_top = 24.0
 offset_right = 158.0
@@ -47,27 +44,27 @@ offset_bottom = 109.0
 theme = ExtResource("1_teger")
 theme_override_styles/panel = SubResource("StyleBoxFlat_ywff3")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/CoinContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CoinContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="GridContainer" type="GridContainer" parent="CanvasLayer/CoinContainer/MarginContainer"]
+[node name="GridContainer" type="GridContainer" parent="CoinContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 columns = 2
 
-[node name="CoinIcon" type="TextureRect" parent="CanvasLayer/CoinContainer/MarginContainer/GridContainer"]
+[node name="CoinIcon" type="TextureRect" parent="CoinContainer/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("2_w7qbd")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="CoinAmountLabel" type="Label" parent="CanvasLayer/CoinContainer/MarginContainer/GridContainer"]
+[node name="CoinAmountLabel" type="Label" parent="CoinContainer/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 32
@@ -76,7 +73,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("3_ei6h0")
 
-[node name="Healthbar" type="ProgressBar" parent="CanvasLayer"]
+[node name="Healthbar" type="ProgressBar" parent="."]
 unique_name_in_owner = true
 z_index = 1
 offset_right = 240.0
@@ -87,7 +84,7 @@ value = 100.0
 show_percentage = false
 script = ExtResource("4_nt68b")
 
-[node name="Damagebar" type="ProgressBar" parent="CanvasLayer/Healthbar"]
+[node name="Damagebar" type="ProgressBar" parent="Healthbar"]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -100,8 +97,8 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_gey0t")
 value = 100.0
 show_percentage = false
 
-[node name="Timer" type="Timer" parent="CanvasLayer/Healthbar"]
+[node name="Timer" type="Timer" parent="Healthbar"]
 wait_time = 0.4
 one_shot = true
 
-[connection signal="timeout" from="CanvasLayer/Healthbar/Timer" to="CanvasLayer/Healthbar" method="_on_timer_timeout"]
+[connection signal="timeout" from="Healthbar/Timer" to="Healthbar" method="_on_timer_timeout"]
