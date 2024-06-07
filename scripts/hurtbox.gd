@@ -2,6 +2,7 @@
 class_name Hurtbox
 extends Area2D
 
+# BUG This is the culprit of _create_instance: Error
 func _init(damage):
 	collision_layer = 0
 	collision_mask = 2

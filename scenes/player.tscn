@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://xxaoff7gwbrm"]
+[gd_scene load_steps=33 format=3 uid="uid://xxaoff7gwbrm"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_1xjd0"]
 [ext_resource type="Texture2D" uid="uid://1g284csv52v0" path="res://assets/sprites/player/Knight_1/Idle.png" id="2_daacd"]
@@ -349,8 +349,16 @@ _data = {
 "run": SubResource("Animation_6vwpt")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1tyjm"]
+animation = &"attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3vy5w"]
+animation = &"damaged"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_31flf"]
 animation = &"fall"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_wnfpv"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wwjn2"]
 animation = &"idle"
@@ -371,6 +379,8 @@ input_1/name = "air"
 input_1/auto_advance = false
 input_1/reset = true
 
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_ij3gp"]
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kv41i"]
 animation = &"jump"
 
@@ -388,25 +398,33 @@ input_1/reset = true
 animation = &"run"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_8odqd"]
-graph_offset = Vector2(-694.498, 78.6341)
+graph_offset = Vector2(-485.494, 106.109)
+nodes/attack/node = SubResource("AnimationNodeAnimation_1tyjm")
+nodes/attack/position = Vector2(-320, 220)
+nodes/damaged/node = SubResource("AnimationNodeAnimation_3vy5w")
+nodes/damaged/position = Vector2(80, 400)
 nodes/falling/node = SubResource("AnimationNodeAnimation_31flf")
 nodes/falling/position = Vector2(-360, 360)
+nodes/ground_attack/node = SubResource("AnimationNodeOneShot_wnfpv")
+nodes/ground_attack/position = Vector2(-120, 20)
 nodes/idle/node = SubResource("AnimationNodeAnimation_wwjn2")
-nodes/idle/position = Vector2(-500, 120)
+nodes/idle/position = Vector2(-520, -20)
 nodes/in_air/node = SubResource("AnimationNodeTransition_li20s")
 nodes/in_air/position = Vector2(-180, 360)
 nodes/in_air_state/node = SubResource("AnimationNodeTransition_t4kcq")
 nodes/in_air_state/position = Vector2(60, 160)
+nodes/is_damaged/node = SubResource("AnimationNodeOneShot_ij3gp")
+nodes/is_damaged/position = Vector2(280, 260)
 nodes/jump/node = SubResource("AnimationNodeAnimation_kv41i")
 nodes/jump/position = Vector2(-360, 500)
 nodes/movement/node = SubResource("AnimationNodeTransition_qop35")
-nodes/movement/position = Vector2(-320, 120)
+nodes/movement/position = Vector2(-320, 0)
 nodes/movement_time/node = SubResource("AnimationNodeTimeScale_wvurs")
-nodes/movement_time/position = Vector2(-520, 260)
-nodes/output/position = Vector2(280, 200)
+nodes/movement_time/position = Vector2(-520, 140)
+nodes/output/position = Vector2(500, 260)
 nodes/run/node = SubResource("AnimationNodeAnimation_4g2ir")
-nodes/run/position = Vector2(-720, 280)
-node_connections = [&"in_air", 0, &"falling", &"in_air", 1, &"jump", &"in_air_state", 0, &"movement", &"in_air_state", 1, &"in_air", &"movement", 0, &"idle", &"movement", 1, &"movement_time", &"movement_time", 0, &"run", &"output", 0, &"in_air_state"]
+nodes/run/position = Vector2(-720, 160)
+node_connections = [&"ground_attack", 0, &"movement", &"ground_attack", 1, &"attack", &"in_air", 0, &"falling", &"in_air", 1, &"jump", &"in_air_state", 0, &"ground_attack", &"in_air_state", 1, &"in_air", &"is_damaged", 0, &"in_air_state", &"is_damaged", 1, &"damaged", &"movement", 0, &"idle", &"movement", 1, &"movement_time", &"movement_time", 0, &"run", &"output", 0, &"is_damaged"]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -429,7 +447,7 @@ collision_mask = 0
 script = ExtResource("8_tdmwk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitBox"]
-position = Vector2(44, 21)
+position = Vector2(49, 21)
 shape = SubResource("RectangleShape2D_tl2fc")
 disabled = true
 
@@ -437,17 +455,22 @@ disabled = true
 libraries = {
 "": SubResource("AnimationLibrary_0dkb2")
 }
-speed_scale = 0.128
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeBlendTree_8odqd")
 anim_player = NodePath("../AnimationPlayer")
+parameters/ground_attack/active = false
+parameters/ground_attack/internal_active = false
+parameters/ground_attack/request = 0
 parameters/in_air/current_state = "jumping"
-parameters/in_air/transition_request = ""
+parameters/in_air/transition_request = "jumping"
 parameters/in_air/current_index = 1
 parameters/in_air_state/current_state = "ground"
 parameters/in_air_state/transition_request = ""
 parameters/in_air_state/current_index = 0
+parameters/is_damaged/active = false
+parameters/is_damaged/internal_active = false
+parameters/is_damaged/request = 0
 parameters/movement/current_state = "idle"
 parameters/movement/transition_request = ""
 parameters/movement/current_index = 0

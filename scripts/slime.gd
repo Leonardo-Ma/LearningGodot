@@ -22,5 +22,9 @@ func _process(delta):
 #Just a reminder: For this to work collision mask needs to be 2 (Same as player layer) - 2 hours wasted...
 func _on_damage_detection_body_entered(body):
 	if body.has_method("player"):
-		var damageAmount = 10
+		var damageAmount = 50
 		emit_signal("damage", damageAmount)
+		
+func take_damage(damageAmount: int):
+	animated_sprite_2d.play("default")
+	print_debug("hit")
