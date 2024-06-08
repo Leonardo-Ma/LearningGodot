@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://xxaoff7gwbrm"]
+[gd_scene load_steps=35 format=3 uid="uid://xxaoff7gwbrm"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_1xjd0"]
 [ext_resource type="Texture2D" uid="uid://1g284csv52v0" path="res://assets/sprites/player/Knight_1/Idle.png" id="2_daacd"]
@@ -173,6 +173,20 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"die"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_que8x"]
@@ -355,6 +369,9 @@ animation = &"attack"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3vy5w"]
 animation = &"damaged"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8124e"]
+animation = &"death"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_31flf"]
 animation = &"fall"
 
@@ -379,6 +396,14 @@ input_1/name = "air"
 input_1/auto_advance = false
 input_1/reset = true
 
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_bnqi8"]
+input_0/name = "dead"
+input_0/auto_advance = false
+input_0/reset = true
+input_1/name = "not_dead"
+input_1/auto_advance = false
+input_1/reset = true
+
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_ij3gp"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kv41i"]
@@ -398,11 +423,13 @@ input_1/reset = true
 animation = &"run"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_8odqd"]
-graph_offset = Vector2(-485.494, 106.109)
+graph_offset = Vector2(-504.527, 73.2942)
 nodes/attack/node = SubResource("AnimationNodeAnimation_1tyjm")
 nodes/attack/position = Vector2(-320, 220)
 nodes/damaged/node = SubResource("AnimationNodeAnimation_3vy5w")
-nodes/damaged/position = Vector2(80, 400)
+nodes/damaged/position = Vector2(40, 560)
+nodes/death/node = SubResource("AnimationNodeAnimation_8124e")
+nodes/death/position = Vector2(20, 420)
 nodes/falling/node = SubResource("AnimationNodeAnimation_31flf")
 nodes/falling/position = Vector2(-360, 360)
 nodes/ground_attack/node = SubResource("AnimationNodeOneShot_wnfpv")
@@ -413,8 +440,10 @@ nodes/in_air/node = SubResource("AnimationNodeTransition_li20s")
 nodes/in_air/position = Vector2(-180, 360)
 nodes/in_air_state/node = SubResource("AnimationNodeTransition_t4kcq")
 nodes/in_air_state/position = Vector2(60, 160)
+nodes/is_alive/node = SubResource("AnimationNodeTransition_bnqi8")
+nodes/is_alive/position = Vector2(200, 440)
 nodes/is_damaged/node = SubResource("AnimationNodeOneShot_ij3gp")
-nodes/is_damaged/position = Vector2(280, 260)
+nodes/is_damaged/position = Vector2(340, 260)
 nodes/jump/node = SubResource("AnimationNodeAnimation_kv41i")
 nodes/jump/position = Vector2(-360, 500)
 nodes/movement/node = SubResource("AnimationNodeTransition_qop35")
@@ -424,7 +453,7 @@ nodes/movement_time/position = Vector2(-520, 140)
 nodes/output/position = Vector2(500, 260)
 nodes/run/node = SubResource("AnimationNodeAnimation_4g2ir")
 nodes/run/position = Vector2(-720, 160)
-node_connections = [&"ground_attack", 0, &"movement", &"ground_attack", 1, &"attack", &"in_air", 0, &"falling", &"in_air", 1, &"jump", &"in_air_state", 0, &"ground_attack", &"in_air_state", 1, &"in_air", &"is_damaged", 0, &"in_air_state", &"is_damaged", 1, &"damaged", &"movement", 0, &"idle", &"movement", 1, &"movement_time", &"movement_time", 0, &"run", &"output", 0, &"is_damaged"]
+node_connections = [&"ground_attack", 0, &"movement", &"ground_attack", 1, &"attack", &"in_air", 0, &"falling", &"in_air", 1, &"jump", &"in_air_state", 0, &"ground_attack", &"in_air_state", 1, &"in_air", &"is_alive", 0, &"death", &"is_alive", 1, &"damaged", &"is_damaged", 0, &"in_air_state", &"is_damaged", 1, &"is_alive", &"movement", 0, &"idle", &"movement", 1, &"movement_time", &"movement_time", 0, &"run", &"output", 0, &"is_damaged"]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -468,6 +497,9 @@ parameters/in_air/current_index = 1
 parameters/in_air_state/current_state = "ground"
 parameters/in_air_state/transition_request = ""
 parameters/in_air_state/current_index = 0
+parameters/is_alive/current_state = "not_dead"
+parameters/is_alive/transition_request = ""
+parameters/is_alive/current_index = 1
 parameters/is_damaged/active = false
 parameters/is_damaged/internal_active = false
 parameters/is_damaged/request = 0

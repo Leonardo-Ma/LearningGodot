@@ -46,22 +46,9 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, speed)
 		animation_tree.set("parameters/movement/transition_request", "idle") # Trigger idle animation
 	
-	# Update facing direction
-	if direction.x > 0:
-		sprite.flip_h = false
-		$Sprite2D/HitBox/CollisionShape2D.position.x = 49 # Read _BUG_ tag below
-		$CollisionShape2D.position.x = 12 # Read _BUG_ tag below
-	elif direction.x < 0:
-		sprite.flip_h = true
-		$Sprite2D/HitBox/CollisionShape2D.position.x = -3 # Read _BUG_ tag below
-		$CollisionShape2D.position.x = 30 # Read _BUG_ tag below
-	
-	# BUG For the future me to fix and use this instead to flip the whole player:
-	# https://www.reddit.com/r/godot/comments/jfbwzm/how_do_i_flip_a_collision_shape_2d_along_with_the/
-	#if direction.x > 0:
-		#scale.x = 1
-	#elif direction.x < 0:
-		#scale.x *= -1
+	## Update facing direction
+	if direction.x != 0:
+		scale.x = scale.y * direction.x
 		
 	move_and_slide()
 	
@@ -71,14 +58,15 @@ func player():
 	
 func take_damage(damageAmount):
 	Globals.playerHealth -= damageAmount
+	emit_signal("update_playerhealth", Globals.playerHealth)
+	animation_tree.set("parameters/is_alive/transition_request", "not_dead")
+	if Globals.playerHealth <= 0:
+		animation_tree.set("parameters/is_alive/transition_request", "dead")
 	animation_tree.set("parameters/is_damaged/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	# This signal sends the new player health so the UI update itself (healthbar.gd)
-	emit_signal("update_playerhealth", Globals.playerHealth)
-	if Globals.playerHealth <= 0:
-		die()
 	
 func die():
-	$AnimationPlayer.play("death") # TODO Place logic in animation tree and use it instead
+
 	# TODO Force finish animation before reloading scene
 	get_tree().call_deferred("reload_current_scene")
 	Globals.resetValues()
