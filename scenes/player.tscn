@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://xxaoff7gwbrm"]
+[gd_scene load_steps=37 format=3 uid="uid://xxaoff7gwbrm"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_1xjd0"]
 [ext_resource type="Texture2D" uid="uid://1g284csv52v0" path="res://assets/sprites/player/Knight_1/Idle.png" id="2_daacd"]
@@ -8,13 +8,14 @@
 [ext_resource type="Texture2D" uid="uid://dy2xglpawqytk" path="res://assets/sprites/player/Knight_1/Jump.png" id="5_crwrb"]
 [ext_resource type="Texture2D" uid="uid://dlun0xj2kul3s" path="res://assets/sprites/player/Knight_1/Dead.png" id="6_y2p6e"]
 [ext_resource type="Script" path="res://scripts/hitbox.gd" id="8_tdmwk"]
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="9_fii08"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ry2ya"]
 radius = 16.0
 height = 66.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tl2fc"]
-size = Vector2(40, 50)
+size = Vector2(36, 50)
 
 [sub_resource type="Animation" id="Animation_t8x70"]
 length = 0.001
@@ -176,7 +177,7 @@ tracks/2/keys = {
 }
 tracks/3/type = "method"
 tracks/3/imported = false
-tracks/3/enabled = true
+tracks/3/enabled = false
 tracks/3/path = NodePath(".")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
@@ -423,7 +424,7 @@ input_1/reset = true
 animation = &"run"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_8odqd"]
-graph_offset = Vector2(-504.527, 73.2942)
+graph_offset = Vector2(-331.102, 71.9245)
 nodes/attack/node = SubResource("AnimationNodeAnimation_1tyjm")
 nodes/attack/position = Vector2(-320, 220)
 nodes/damaged/node = SubResource("AnimationNodeAnimation_3vy5w")
@@ -455,6 +456,9 @@ nodes/run/node = SubResource("AnimationNodeAnimation_4g2ir")
 nodes/run/position = Vector2(-720, 160)
 node_connections = [&"ground_attack", 0, &"movement", &"ground_attack", 1, &"attack", &"in_air", 0, &"falling", &"in_air", 1, &"jump", &"in_air_state", 0, &"ground_attack", &"in_air_state", 1, &"in_air", &"is_alive", 0, &"death", &"is_alive", 1, &"damaged", &"is_damaged", 0, &"in_air_state", &"is_damaged", 1, &"is_alive", &"movement", 0, &"idle", &"movement", 1, &"movement_time", &"movement_time", 0, &"run", &"output", 0, &"is_damaged"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m64it"]
+size = Vector2(41, 68)
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_1xjd0")
@@ -476,9 +480,10 @@ collision_mask = 0
 script = ExtResource("8_tdmwk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitBox"]
-position = Vector2(49, 21)
+position = Vector2(51, 21)
 shape = SubResource("RectangleShape2D_tl2fc")
 disabled = true
+debug_color = Color(0.996078, 0, 0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -508,4 +513,15 @@ parameters/movement/transition_request = ""
 parameters/movement/current_index = 0
 parameters/movement_time/scale = 1.0
 
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("9_fii08")
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(11.5, 21)
+shape = SubResource("RectangleShape2D_m64it")
+debug_color = Color(1, 0, 1, 0.419608)
+
 [connection signal="update_playerhealth" from="." to="." method="_on_update_playerhealth"]
+[connection signal="area_entered" from="Hurtbox" to="Hurtbox" method="_on_area_entered"]

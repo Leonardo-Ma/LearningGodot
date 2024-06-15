@@ -1,16 +1,15 @@
-# https://www.youtube.com/watch?v=JWjzSn95bM0 
+# https://www.youtube.com/watch?v=JWjzSn95bM0
 class_name Hurtbox
 extends Area2D
 
-# BUG This is the culprit of _create_instance: Error
-func _init(damage):
+func _init():
 	collision_layer = 0
-	collision_mask = 2
+	collision_mask = 4
 	
 func _ready():
 	connect("area_entered", self._on_area_entered)
 	
-func _on_aread_entered(hitbox: Hitbox):
+func _on_area_entered(hitbox: Hitbox):
 	if (hitbox == null):
 		return
 		
