@@ -22,7 +22,6 @@ func _ready():
 	animation_tree.active = true
 	
 func _physics_process(delta):
-	# Add the gravity
 	if not is_on_floor():
 		animation_tree.set("parameters/in_air_state/transition_request", "air")
 		velocity.y += gravity * delta
@@ -52,32 +51,18 @@ func _physics_process(delta):
 		
 	move_and_slide()
 	
-# Auxiliary function for enemy scripts to check if this is the player Using: has_method("player")
-func player():
-	pass
-	
 func take_damage(damageAmount):
 	Globals.playerHealth -= damageAmount
 	emit_signal("update_playerhealth", Globals.playerHealth)
 	animation_tree.set("parameters/is_alive/transition_request", "not_dead")
 	if Globals.playerHealth <= 0:
+		# This animation will call die() function when done
 		animation_tree.set("parameters/is_alive/transition_request", "dead")
 	animation_tree.set("parameters/is_damaged/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-	# This signal sends the new player health so the UI update itself (healthbar.gd)
 	
 func die():
-
-	# TODO Force finish animation before reloading scene
 	get_tree().call_deferred("reload_current_scene")
 	Globals.resetValues()
-	request_ready()
-	
 	# Recall the player's ready function so every time the player dies, the healthbar
 	# is also restarted (Healthbar is queued free if health == 0)
-	
-# TODO Transform this into a signal to avoid code duplication
-func _on_slime_2_damage(damageAmount):
-	take_damage(damageAmount)
-	
-func _on_slime_damage(damageValue):
-	take_damage(damageValue)
+	request_ready() 

@@ -1,5 +1,6 @@
 extends Area2D
 
-func _on_body_entered(_body):
+func _on_body_entered(body):
 	var player = get_tree().get_root().get_node("Game/Player")
-	player.die()
+	if (body == player):
+		player.die()
