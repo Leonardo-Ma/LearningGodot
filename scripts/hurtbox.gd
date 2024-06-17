@@ -1,4 +1,4 @@
-# https://www.youtube.com/watch?v=JWjzSn95bM0
+# https://www.youtube.com/watch?v=JWjzSn95bM0 - How to Code Melee Attacks in Godot: Hitboxes and Hurtboxes
 class_name Hurtbox
 extends Area2D
 
@@ -8,7 +8,7 @@ func _init():
 	
 func _ready():
 	connect("area_entered", self._on_area_entered)
-	
+
 func _on_area_entered(hitbox: Hitbox):
 	if (hitbox == null):
 		return

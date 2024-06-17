@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://beel7n2lsj15g" path="res://main_theme.tres" id="1_teger"]
 [ext_resource type="Texture2D" uid="uid://copdgp3n4f1jm" path="res://assets/sprites/UIcoin.png" id="2_w7qbd"]
 [ext_resource type="Script" path="res://scripts/coin_amount_label.gd" id="3_ei6h0"]
-[ext_resource type="Script" path="res://scripts/Healthbar.gd" id="4_nt68b"]
+[ext_resource type="Script" path="res://scripts/healthbar.gd" id="4_nt68b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ywff3"]
 bg_color = Color(0.281187, 0.281187, 0.281187, 1)

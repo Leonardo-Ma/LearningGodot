@@ -1,4 +1,4 @@
-# https://www.youtube.com/watch?v=JWjzSn95bM0
+# https://www.youtube.com/watch?v=JWjzSn95bM0 - How to Code Melee Attacks in Godot: Hitboxes and Hurtboxes
 class_name Hitbox
 extends Area2D
 

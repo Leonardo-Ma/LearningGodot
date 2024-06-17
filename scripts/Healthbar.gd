@@ -7,11 +7,11 @@ extends ProgressBar
 func _ready():
 	# https://forum.godotengine.org/t/how-to-get-node-from-another-scene/30276/4
 	var player = get_tree().get_root().get_node("Game/Player")
-	# Healthbar is initialized in player.gd
+	## Healthbar is initialized in player.gd
 	player.connect("update_playerhealth", Callable(self, "_set_health"))
 
 # TODO Maybe change to directly use global values
-# When this var receives a value, it instantiates the setter
+## When this var receives a value, it instantiates the setter
 var health: int = 0 : set = _set_health
 
 func _set_health(new_health):
