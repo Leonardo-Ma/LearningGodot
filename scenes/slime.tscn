@@ -2,7 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://cw3ocsdo5xb38" path="res://assets/sprites/enemy/slime_green.png" id="1_buwiv"]
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_hyhiy"]
+[ext_resource type="Script" path="res://scripts/hitbox.gd" id="2_bnafe"]
 [ext_resource type="Script" path="res://scripts/hurtbox.gd" id="3_5xfbt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fkpb"]
+size = Vector2(12, 12.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eo7d1"]
 atlas = ExtResource("1_buwiv")
@@ -44,14 +48,14 @@ animations = [{
 radius = 9.0
 height = 18.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fkpb"]
-size = Vector2(14.5, 12.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4dxh"]
-size = Vector2(17, 14.5)
-
 [node name="Slime" type="CharacterBody2D"]
+collision_layer = 5
+collision_mask = 2
 script = ExtResource("1_hyhiy")
+
+[node name="SlimeCollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6.25)
+shape = SubResource("RectangleShape2D_8fkpb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0wl3n")
@@ -59,22 +63,14 @@ autoplay = "default"
 frame_progress = 0.367124
 
 [node name="Hurtbox" type="Area2D" parent="AnimatedSprite2D"]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource("3_5xfbt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Hurtbox"]
+[node name="HurtboxShape" type="CollisionShape2D" parent="AnimatedSprite2D/Hurtbox"]
 position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_0caug")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2(-0.25, 6.25)
-shape = SubResource("RectangleShape2D_8fkpb")
-
-[node name="DamageDetection" type="Area2D" parent="."]
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageDetection"]
-position = Vector2(-0.5, 6.25)
-shape = SubResource("RectangleShape2D_j4dxh")
+debug_color = Color(1, 0, 0.631373, 0.321569)
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, 8)
@@ -84,4 +80,11 @@ target_position = Vector2(9, 0)
 position = Vector2(0, 8)
 target_position = Vector2(-9, 0)
 
-[connection signal="body_entered" from="DamageDetection" to="." method="_on_damage_detection_body_entered"]
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("2_bnafe")
+
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 6.25)
+shape = SubResource("RectangleShape2D_8fkpb")
